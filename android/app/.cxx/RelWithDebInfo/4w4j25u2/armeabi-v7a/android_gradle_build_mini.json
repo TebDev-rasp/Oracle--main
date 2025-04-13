@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/home/rasp/Android/Sdk/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/usr/bin/ninja",
+      "-C",
+      "/home/rasp/Android/Projects/oracle/android/app/.cxx/RelWithDebInfo/4w4j25u2/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/usr/bin/ninja",
+    "-C",
+    "/home/rasp/Android/Projects/oracle/android/app/.cxx/RelWithDebInfo/4w4j25u2/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

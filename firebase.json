@@ -1,0 +1,50 @@
+{
+  "firestore": {
+    "rules": "(firestore.rules)",
+    "indexes": "(firestore.indexes.json)"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    }
+  ],
+  "storage": {
+    "rules": "(storage.rule)"
+  },
+  "database": {
+    "rules": "(database.rule)"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "heat-index-monitoring-b11b0",
+          "appId": "1:28956293501:android:c86c3a7c08623b83e93414",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "heat-index-monitoring-b11b0",
+          "configurations": {
+            "android": "1:28956293501:android:c86c3a7c08623b83e93414",
+            "ios": "1:28956293501:ios:dc356bbf909a27b4e93414",
+            "macos": "1:28956293501:ios:dc356bbf909a27b4e93414",
+            "web": "1:28956293501:web:7cb9676a059fa9c9e93414"
+          }
+        }
+      }
+    }
+  }
+}

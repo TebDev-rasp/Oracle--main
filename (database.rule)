@@ -1,0 +1,164 @@
+{
+  "rules": {
+    "usernames": {
+      ".read": true,
+      ".write": "auth != null",
+      ".indexOn": ["username", "email"],
+      "$uid": {
+        ".validate": "newData.hasChildren(['username', 'email']) && newData.child('username').isString() && newData.child('email').isString() && !data.exists()"
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid",
+        "username": {
+          ".validate": "newData.isString()"
+        },
+        "email": {
+          ".validate": "newData.isString()"
+        },
+        "profile": {
+          ".validate": "newData.hasChildren(['displayName', 'photoURL'])",
+          "displayName": {
+            ".validate": "newData.isString()"
+          },
+          "photoURL": {
+            ".validate": "newData.isString()"
+          }
+        }
+      }
+    },
+    "user_images": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid",
+        "imageData": {
+          ".validate": "newData.isString()"
+        },
+        "timestamp": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+    "sensor_data": {
+      "raw": {
+        ".read": "auth != null",
+        ".write": true,
+        "temperature": {
+          "celsius": {
+            ".validate": "newData.isNumber() && newData.val() >= -50 && newData.val() <= 150"
+          },
+          "fahrenheit": {
+            ".validate": "newData.isNumber() && newData.val() >= -58 && newData.val() <= 302"
+          }
+        },
+        "humidity": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+        }
+      },
+      "smooth": {
+        ".read": "auth != null",
+        ".write": true,
+        "heat_index": {
+          "celsius": {
+            ".validate": "newData.isNumber() && newData.val() >= -50 && newData.val() <= 150"
+          },
+          "fahrenheit": {
+            ".validate": "newData.isNumber() && newData.val() >= -58 && newData.val() <= 302"
+          }
+        }
+      }
+    },
+    "hourly_records": {
+      ".read": "auth != null",
+      ".write": true,
+      "$hour": {
+        "temperature": {
+          "celsius": {
+            ".validate": "newData.isNumber() && newData.val() >= -50 && newData.val() <= 150"
+          },
+          "fahrenheit": {
+            ".validate": "newData.isNumber() && newData.val() >= -58 && newData.val() <= 302"
+          }
+        },
+        "humidity": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+        },
+        "heat_index": {
+          "celsius": {
+            ".validate": "newData.isNumber() && newData.val() >= -50 && newData.val() <= 150"
+          },
+          "fahrenheit": {
+            ".validate": "newData.isNumber() && newData.val() >= -58 && newData.val() <= 302"
+          }
+        },
+        "timestamp": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+    "daily_records": {
+      ".read": "auth != null",
+      ".write": true,
+      "$day": {
+        "$hour": {
+          "temperature": {
+            "celsius": {
+              ".validate": "newData.isNumber() && newData.val() >= -50 && newData.val() <= 150"
+            },
+            "fahrenheit": {
+              ".validate": "newData.isNumber() && newData.val() >= -58 && newData.val() <= 302"
+            }
+          },
+          "humidity": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+          },
+          "heat_index": {
+            "celsius": {
+              ".validate": "newData.isNumber() && newData.val() >= -50 && newData.val() <= 150"
+            },
+            "fahrenheit": {
+              ".validate": "newData.isNumber() && newData.val() >= -58 && newData.val() <= 302"
+            }
+          },
+          "timestamp": {
+            ".validate": "newData.isNumber()"
+          }
+        }
+      }
+    },
+    "weekly_archive": {
+      ".read": "auth != null",
+      ".write": true,
+      "$week": {
+        "$day": {
+          "$hour": {
+            "temperature": {
+              "celsius": {
+                ".validate": "newData.isNumber() && newData.val() >= -50 && newData.val() <= 150"
+              },
+              "fahrenheit": {
+                ".validate": "newData.isNumber() && newData.val() >= -58 && newData.val() <= 302"
+              }
+            },
+            "humidity": {
+              ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+            },
+            "heat_index": {
+              "celsius": {
+                ".validate": "newData.isNumber() && newData.val() >= -50 && newData.val() <= 150"
+              },
+              "fahrenheit": {
+                ".validate": "newData.isNumber() && newData.val() >= -58 && newData.val() <= 302"
+              }
+            },
+            "timestamp": {
+              ".validate": "newData.isNumber()"
+            }
+          }
+        }
+      }
+    }
+  }
+}

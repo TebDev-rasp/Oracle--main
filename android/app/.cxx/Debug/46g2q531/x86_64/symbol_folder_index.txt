@@ -1,0 +1,1 @@
+/home/rasp/Android/Projects/oracle/build/app/intermediates/cxx/Debug/46g2q531/obj/x86_64

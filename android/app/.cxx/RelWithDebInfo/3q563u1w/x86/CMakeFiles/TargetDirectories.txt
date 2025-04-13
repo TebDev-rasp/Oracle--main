@@ -1,0 +1,2 @@
+C:/Oracle--main/android/app/.cxx/RelWithDebInfo/3q563u1w/x86/CMakeFiles/edit_cache.dir
+C:/Oracle--main/android/app/.cxx/RelWithDebInfo/3q563u1w/x86/CMakeFiles/rebuild_cache.dir

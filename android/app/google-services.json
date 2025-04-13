@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "28956293501",
+    "firebase_url": "https://heat-index-monitoring-b11b0-default-rtdb.firebaseio.com",
+    "project_id": "heat-index-monitoring-b11b0",
+    "storage_bucket": "heat-index-monitoring-b11b0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28956293501:android:fe1e6dae5f17ac00e93414",
+        "android_client_info": {
+          "package_name": "com.example.hindex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXUBWc-zjqd6zkwIR_4M47KJhwCLydB7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28956293501:android:c86c3a7c08623b83e93414",
+        "android_client_info": {
+          "package_name": "com.example.oracle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXUBWc-zjqd6zkwIR_4M47KJhwCLydB7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28956293501:android:866bdf48f7b01fdde93414",
+        "android_client_info": {
+          "package_name": "com.tebdev.heatsense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXUBWc-zjqd6zkwIR_4M47KJhwCLydB7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,2 @@
+/home/rasp/Android/Projects/oracle/android/app/.cxx/RelWithDebInfo/4w4j25u2/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/rasp/Android/Projects/oracle/android/app/.cxx/RelWithDebInfo/4w4j25u2/armeabi-v7a/CMakeFiles/rebuild_cache.dir
