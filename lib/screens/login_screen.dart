@@ -8,11 +8,8 @@ import '../providers/user_profile_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   final bool fromAccountDeletion;
-  
-  const LoginScreen({
-    super.key, 
-    this.fromAccountDeletion = false
-  });
+
+  const LoginScreen({super.key, this.fromAccountDeletion = false});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -35,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _emailOrUsernameController.text,
           _passwordController.text,
         );
-        
+
         final username = await _authService.getUsername();
         if (mounted) {
           context.read<UserProfileProvider>().updateUsername(username);
@@ -74,7 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.all(24),
               child: Form(
                 key: _formKey,
-                child: Column(                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
@@ -88,7 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       controller: _emailOrUsernameController,
                       style: TextStyle(
-                        color: isDarkMode ? Colors.white : const Color(0xFF111217),
+                        color:
+                            isDarkMode ? Colors.white : const Color(0xFF111217),
                       ),
                       decoration: InputDecoration(
                         labelText: 'Username/Email',
@@ -112,7 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       controller: _passwordController,
                       style: TextStyle(
-                        color: isDarkMode ? Colors.white : const Color(0xFF111217),
+                        color:
+                            isDarkMode ? Colors.white : const Color(0xFF111217),
                       ),
                       decoration: InputDecoration(
                         labelText: 'Password',
@@ -126,7 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _isPasswordVisible ? Icons.lock_open : Icons.lock_outline,
+                            _isPasswordVisible
+                                ? Icons.lock_open
+                                : Icons.lock_outline,
                             color: isDarkMode ? Colors.white70 : Colors.black54,
                           ),
                           onPressed: () {
@@ -152,8 +154,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: _isLoading ? null : _handleLogin,
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: isDarkMode ? Colors.white : const Color(0xFF111217),
-                          foregroundColor: isDarkMode ? const Color(0xFF111217) : Colors.white,
+                          backgroundColor: isDarkMode
+                              ? Colors.white
+                              : const Color(0xFF111217),
+                          foregroundColor: isDarkMode
+                              ? const Color(0xFF111217)
+                              : Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),
@@ -185,7 +191,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: OutlinedButton.styleFrom(
                           elevation: 0,
                           side: BorderSide(
-                            color: isDarkMode ? Colors.white : const Color(0xFF111217),
+                            color: isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF111217),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
@@ -194,7 +202,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'Sign Up',
                           style: TextStyle(
-                            color: isDarkMode ? Colors.white : const Color(0xFF111217),
+                            color: isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF111217),
                           ),
                         ),
                       ),
@@ -214,7 +224,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ForgotPasswordScreen(),
+                              builder: (context) =>
+                                  const ForgotPasswordScreen(),
                             ),
                           );
                         },
@@ -226,9 +237,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'Forgot Password?',
                           style: TextStyle(
-                            color: _isForgotPasswordPressed 
-                                ? Colors.purple 
-                                : (isDarkMode ? Colors.white70 : Colors.black54),
+                            color: _isForgotPasswordPressed
+                                ? Colors.purple
+                                : (isDarkMode
+                                    ? Colors.white70
+                                    : Colors.black54),
                           ),
                         ),
                       ),

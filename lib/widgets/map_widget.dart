@@ -7,7 +7,7 @@ import 'package:oracle/widgets/heat_index_leaflet.dart';
 class CachingTileProvider extends TileProvider {
   final BaseCacheManager cacheManager;
 
-  CachingTileProvider({BaseCacheManager? cacheManager}) 
+  CachingTileProvider({BaseCacheManager? cacheManager})
       : cacheManager = cacheManager ?? DefaultCacheManager();
 
   @override
@@ -49,9 +49,9 @@ class _MapWidgetState extends State<MapWidget> {
           mapController: _mapController,
           options: MapOptions(
             initialCenter: castillejosLocation,
-            initialZoom: 9,      // Start at zoom level 13
-            minZoom: 9,          // Minimum zoom unchanged
-            maxZoom: 16,         // Increased max zoom to 17
+            initialZoom: 9, // Start at zoom level 13
+            minZoom: 9, // Minimum zoom unchanged
+            maxZoom: 16, // Increased max zoom to 17
             onMapReady: () {
               setState(() {
                 isLoading = false;
@@ -60,13 +60,15 @@ class _MapWidgetState extends State<MapWidget> {
           ),
           children: [
             TileLayer(
-              urlTemplate: 'https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=U1ZGZGT5WX7HvfCaRryf',
+              urlTemplate:
+                  'https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=U1ZGZGT5WX7HvfCaRryf',
               userAgentPackageName: 'com.example.app',
               tileProvider: CachingTileProvider(),
-              maxZoom: 16,       // Match MapOptions maxZoom
-              minZoom: 9,        // Match MapOptions minZoom
+              maxZoom: 16, // Match MapOptions maxZoom
+              minZoom: 9, // Match MapOptions minZoom
               additionalOptions: const {
-                'attribution': '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e',
+                'attribution':
+                    '\u003ca href="https://www.maptiler.com/copyright/" target="_blank"\u003e\u0026copy; MapTiler\u003c/a\u003e',
               },
             ),
             HeatIndexLeaflet(
@@ -137,12 +139,14 @@ class _MapWidgetState extends State<MapWidget> {
         onPressed: () {
           if (heroTag == "zoomIn") {
             final newZoom = _mapController.camera.zoom + 1;
-            if (newZoom <= 17) {  // Updated max zoom check
+            if (newZoom <= 17) {
+              // Updated max zoom check
               _mapController.move(_mapController.camera.center, newZoom);
             }
           } else if (heroTag == "zoomOut") {
             final newZoom = _mapController.camera.zoom - 1;
-            if (newZoom >= 9) {   // Min zoom check unchanged
+            if (newZoom >= 9) {
+              // Min zoom check unchanged
               _mapController.move(_mapController.camera.center, newZoom);
             }
           } else {

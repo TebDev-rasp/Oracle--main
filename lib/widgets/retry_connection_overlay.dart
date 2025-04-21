@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Add this import for SystemNavigator
 import '../services/connectivity_service.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
@@ -61,16 +62,9 @@ class _RetryConnectionOverlayState extends State<RetryConnectionOverlay>
     }
   }
 
-  // Method for "Close" button - just closes the overlay
-
-  // New method for "Continue Offline" button
-  void _handleContinueOffline(ConnectivityService service) async {
-    // Set preference to not show alerts
-    await service.setShowConnectionAlerts(false);
-
-    // Dismiss the overlay
-    setState(() => _showDialog = false);
-    _animationController.reverse();
+  // Method for "Exit" button - exits the app
+  void _handleExit() {
+    SystemNavigator.pop(); // This will close the app
   }
 
   @override
@@ -104,8 +98,8 @@ class _RetryConnectionOverlayState extends State<RetryConnectionOverlay>
                   return Opacity(
                     opacity: _opacityAnimation.value,
                     child: GestureDetector(
-                      // Add this GestureDetector to handle taps outside the card
-                      onTap: () => _handleContinueOffline(service),
+                      // Changed to retry connection when tapping outside
+                      onTap: () => _handleRetry(service),
                       child: Container(
                         color: Colors.black.withAlpha(153),
                         child: Center(
@@ -150,11 +144,8 @@ class _RetryConnectionOverlayState extends State<RetryConnectionOverlay>
                                                   MainAxisAlignment.end,
                                               children: [
                                                 TextButton(
-                                                  onPressed: () =>
-                                                      _handleContinueOffline(
-                                                          service),
-                                                  child: const Text(
-                                                      'Continue Offline'),
+                                                  onPressed: _handleExit,
+                                                  child: const Text('Exit'),
                                                 ),
                                                 const SizedBox(width: 8),
                                                 FilledButton.icon(
