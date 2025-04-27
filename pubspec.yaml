@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   rxdart: ^0.28.0
+  audioplayers: ^5.2.0
   awesome_notifications: ^0.10.1
   firebase_data_connect: ^0.1.0
   flutter_cache_manager: ^3.3.1
@@ -54,6 +55,7 @@ flutter:
     - assets/icon/applogo.png
     - assets/animations/oracle_wisdom.json
     - assets/animations/splash_screen1.json
+    - assets/audio/
 flutter_icons:
   android: "ic_launcher"
   ios: true

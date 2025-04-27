@@ -20,10 +20,12 @@ class HeatIndexLeaflet extends StatefulWidget {
   State<HeatIndexLeaflet> createState() => _HeatIndexLeafletState();
 }
 
-class _HeatIndexLeafletState extends State<HeatIndexLeaflet> with SingleTickerProviderStateMixin {
+class _HeatIndexLeafletState extends State<HeatIndexLeaflet>
+    with SingleTickerProviderStateMixin {
   final HeatIndexLeafletService _service = HeatIndexLeafletService();
   late AnimationController _controller;
   late Animation<double> _animation;
+  LatLng? _lastPosition;
 
   @override
   void initState() {
@@ -53,12 +55,24 @@ class _HeatIndexLeafletState extends State<HeatIndexLeaflet> with SingleTickerPr
         final marker = snapshot.data!;
         final location = LatLng(marker.latitude, marker.longitude);
 
+        // Check if position has changed and force rebuild if needed
+        if (_lastPosition == null ||
+            _lastPosition!.latitude != location.latitude ||
+            _lastPosition!.longitude != location.longitude) {
+          _lastPosition = location;
+
+          // Add a small delay to ensure Flutter rebuilds the widget
+          Future.microtask(() {
+            if (mounted) setState(() {});
+          });
+        }
+
         return MarkerLayer(
           rotate: false,
           markers: [
             Marker(
               point: location,
-              width: 250,  // Increased overall size
+              width: 250, // Increased overall size
               height: 250,
               rotate: false,
               alignment: Alignment.center,
@@ -74,19 +88,22 @@ class _HeatIndexLeafletState extends State<HeatIndexLeaflet> with SingleTickerPr
                         height: 250 * _animation.value,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: marker.markerColor.withAlpha(50),  // Reduced opacity
+                          color: marker.markerColor
+                              .withAlpha(50), // Reduced opacity
                         ),
                       ),
                       // Middle circle
                       Container(
-                        width: 100,  // Increased middle circle
+                        width: 100, // Increased middle circle
                         height: 100,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: marker.markerColor.withAlpha(100),  // Reduced opacity
+                          color: marker.markerColor
+                              .withAlpha(100), // Reduced opacity
                           boxShadow: [
                             BoxShadow(
-                              color: marker.markerColor.withAlpha(40),  // Reduced shadow opacity
+                              color: marker.markerColor
+                                  .withAlpha(40), // Reduced shadow opacity
                               blurRadius: 20,
                               spreadRadius: 10,
                             ),
@@ -95,7 +112,7 @@ class _HeatIndexLeafletState extends State<HeatIndexLeaflet> with SingleTickerPr
                       ),
                       // Inner circle
                       Container(
-                        width: 50,  // Added inner circle
+                        width: 50, // Added inner circle
                         height: 50,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -111,11 +128,12 @@ class _HeatIndexLeafletState extends State<HeatIndexLeaflet> with SingleTickerPr
                       ),
                       // Center dot
                       Container(
-                        width: 15,  // Small center dot
+                        width: 15, // Small center dot
                         height: 15,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: marker.markerColor,  // Full opacity for center dot
+                          color:
+                              marker.markerColor, // Full opacity for center dot
                           boxShadow: [
                             BoxShadow(
                               color: marker.markerColor.withAlpha(200),

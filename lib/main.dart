@@ -33,22 +33,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize notifications with no sound
-  await AwesomeNotifications().initialize(
-      null,
-      [
-        NotificationChannel(
-            channelKey: 'heat_index_channel',
-            channelName: 'Heat Index Alerts',
-            channelDescription: 'Notifications for heat index warnings',
-            defaultColor: Colors.red,
-            ledColor: Colors.red,
-            playSound: false,
-            enableVibration: true,
-            importance: NotificationImportance.High),
-      ],
-      debug: true);
-
   try {
     // Initialize notifications first
     final notificationService = NotificationService();

@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:oracle/services/device_tracking_service.dart';
+import 'package:audioplayers/audioplayers.dart'; // Add this import
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
   static final _logger = Logger('NotificationService');
   static bool _isInitialized = false;
+
+  // Audio player for voice notifications
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _voiceNotificationsEnabled = true;
 
   // Single flag to track if notification was shown this session
 
@@ -27,17 +33,91 @@ class NotificationService {
   // Private constructor
   NotificationService._internal();
 
+  // Method to play appropriate voice based on heat index level
+  Future<void> _playVoiceNotification(String level) async {
+    _logger.info(
+        'Starting voice notification for level: $level (enabled: $_voiceNotificationsEnabled)');
+    if (!_voiceNotificationsEnabled) return;
+
+    try {
+      String assetPath;
+      switch (level) {
+        case 'CAUTION':
+          assetPath = 'assets/audio/caution_voice.mp3';
+          break;
+        case 'EXTREME_CAUTION':
+          assetPath = 'assets/audio/extreme_caution_voice.mp3';
+          break;
+        case 'DANGER':
+          assetPath = 'assets/audio/danger_voice.mp3';
+          break;
+        case 'EXTREME_DANGER':
+          assetPath = 'assets/audio/extreme_danger_voice.mp3';
+          break;
+        default:
+          _logger.warning('Unknown level: $level, skipping voice notification');
+          return;
+      }
+
+      // Debug logging for asset path
+      _logger.info('Attempting to play audio file: $assetPath');
+
+      // Try both path formats
+      try {
+        await _audioPlayer.play(AssetSource(assetPath));
+      } catch (e) {
+        _logger
+            .warning('Failed with first path format, trying alternative: $e');
+        // Try alternative path format (without 'assets/' prefix)
+        final alternativePath = assetPath.replaceFirst('assets/', '');
+        await _audioPlayer.play(AssetSource(alternativePath));
+      }
+
+      _logger.info('Voice notification played successfully for level: $level');
+    } catch (e) {
+      _logger.severe('Failed to play voice notification: $e');
+    }
+  }
+
+  // Method to set voice notifications enabled/disabled
+  Future<void> setVoiceNotificationsEnabled(bool enabled) async {
+    _voiceNotificationsEnabled = enabled;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('voice_notifications_enabled', enabled);
+  }
+
+  // Load voice notification settings
+  Future<void> _loadVoiceSettings() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _voiceNotificationsEnabled =
+          prefs.getBool('voice_notifications_enabled') ?? true;
+    } catch (e) {
+      _logger.warning('Failed to load voice notification settings: $e');
+    }
+  }
+
   Future<void> initialize() async {
+    // Existing initialization code...
     if (_isInitialized) {
       _logger.info('Notification service already initialized');
       return;
     }
 
     // Reset notification state on initialization
-
     _logger.info('Initializing notification service');
 
     try {
+      // Load voice notification settings
+      await _loadVoiceSettings();
+
+      // Add these lines here - AudioPlayer configuration
+      await _audioPlayer.setReleaseMode(ReleaseMode.release);
+      await _audioPlayer.setVolume(1.0);
+      _logger.info(
+          'AudioPlayer initialized with voice enabled: $_voiceNotificationsEnabled');
+
+      // Rest of your existing initialization code...
       await AwesomeNotifications().initialize(
         'resource://drawable/ic_notification',
         [
@@ -50,7 +130,7 @@ class NotificationService {
             importance: NotificationImportance.High,
             enableVibration: true,
             criticalAlerts: true,
-            playSound: false, // Disable sound
+            playSound: true, // Disable sound
             enableLights: true,
             groupKey: 'heat_index_alerts',
             groupSort: GroupSort.Desc,
@@ -234,6 +314,11 @@ class NotificationService {
         ),
         actionButtons: actionButtons,
       );
+
+      // Play voice notification if enabled and level is not normal
+      if (currentLevel != 'NORMAL') {
+        await _playVoiceNotification(currentLevel);
+      }
 
       // Update tracking variables
       _lastNotificationTime = DateTime.now();

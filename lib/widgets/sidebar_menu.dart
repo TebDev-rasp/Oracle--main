@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oracle/providers/temperature_unit_provider.dart';
 import 'package:oracle/screens/home_screen.dart';
+import 'package:oracle/screens/settings_screen.dart'; // Add this import
 import 'package:oracle/widgets/user_avatar.dart';
 import 'package:oracle/widgets/user_avatar_edit.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class _SidebarMenuState extends State<SidebarMenu> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Drawer(
       backgroundColor: isDarkMode ? const Color(0xFF0F0F0F) : Colors.white,
       shape: const RoundedRectangleBorder(
@@ -34,9 +35,12 @@ class _SidebarMenuState extends State<SidebarMenu> {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 20, bottom: 20, left: 80, right: 80),
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 20, left: 80, right: 80),
               decoration: BoxDecoration(
-                color: isDarkMode ? const Color(0xFF1A1A1A) : const Color(0xFFFAFAFA),
+                color: isDarkMode
+                    ? const Color(0xFF1A1A1A)
+                    : const Color(0xFFFAFAFA),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -51,11 +55,13 @@ class _SidebarMenuState extends State<SidebarMenu> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: isDarkMode ? Colors.blue : Colors.blue.shade700,
+                            color:
+                                isDarkMode ? Colors.blue : Colors.blue.shade700,
                             width: 3.0,
                           ),
                         ),
-                        child: Center( // Added Center widget
+                        child: Center(
+                          // Added Center widget
                           child: UserAvatar(
                             size: 156,
                             onTap: () {},
@@ -82,7 +88,8 @@ class _SidebarMenuState extends State<SidebarMenu> {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  Divider(  // Add this divider above Home button
+                  Divider(
+                    // Add this divider above Home button
                     color: isDarkMode ? Colors.grey[900] : Colors.grey[300],
                     thickness: 1.0,
                     height: 1.0,
@@ -99,7 +106,7 @@ class _SidebarMenuState extends State<SidebarMenu> {
                       ),
                     ),
                     selected: ModalRoute.of(context)?.settings.name == '/',
-                    selectedTileColor: isDarkMode 
+                    selectedTileColor: isDarkMode
                         ? Colors.blue.withAlpha(51)
                         : Colors.purple.withAlpha(26),
                     onTap: () {
@@ -127,8 +134,9 @@ class _SidebarMenuState extends State<SidebarMenu> {
                         color: isDarkMode ? Colors.white : Colors.black87,
                       ),
                     ),
-                    selected: ModalRoute.of(context)?.settings.name == '/record',
-                    selectedTileColor: isDarkMode 
+                    selected:
+                        ModalRoute.of(context)?.settings.name == '/record',
+                    selectedTileColor: isDarkMode
                         ? Colors.blue.withAlpha(51)
                         : Colors.purple.withAlpha(26),
                     onTap: () {
@@ -145,7 +153,8 @@ class _SidebarMenuState extends State<SidebarMenu> {
                       }
                     },
                   ),
-                  Divider(  // Existing divider below Record button
+                  Divider(
+                    // Existing divider below Record button
                     color: isDarkMode ? Colors.grey[900] : Colors.grey[300],
                     thickness: 2.0,
                     height: 2.0,
@@ -162,9 +171,12 @@ class _SidebarMenuState extends State<SidebarMenu> {
                       ),
                     ),
                     onTap: () {
-                      final provider = Provider.of<TemperatureUnitProvider>(context, listen: false);
+                      final provider = Provider.of<TemperatureUnitProvider>(
+                          context,
+                          listen: false);
                       provider.setFahrenheit(!provider.isFahrenheit);
-                      Navigator.pop(context);  // Close sidebar when clicking the unit button
+                      Navigator.pop(
+                          context); // Close sidebar when clicking the unit button
                     },
                     trailing: TemperatureUnitToggle(
                       isDarkMode: isDarkMode,
@@ -174,6 +186,20 @@ class _SidebarMenuState extends State<SidebarMenu> {
                     color: isDarkMode ? Colors.grey[900] : Colors.grey[300],
                     thickness: 2.0,
                     height: 2.0,
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.settings),
+                    title: const Text('Settings'),
+                    onTap: () {
+                      // Close the drawer
+                      Navigator.pop(context);
+                      // Navigate to settings screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SettingsScreen()),
+                      );
+                    },
                   ),
                 ],
               ),
